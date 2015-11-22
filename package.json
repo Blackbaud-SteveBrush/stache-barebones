@@ -1,0 +1,26 @@
+{
+  "name": "stache-barebones",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "assemble": "^0.4.42",
+    "grunt": "^0.4.5",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "jit-grunt": "^0.9.1"
+  },
+  "readme": "# stache-barebones\n",
+  "readmeFilename": "README.md",
+  "gitHead": "6cce5e252dd468e8b33e5488c13372897a4cfd7e",
+  "_id": "stache-barebones@1.0.0",
+  "_shasum": "629f0deacd8598f64a02e1c33ac3fa9ca53bbe8a",
+  "_from": "../stache-barebones",
+  "_resolved": "file:../stache-barebones"
+}
