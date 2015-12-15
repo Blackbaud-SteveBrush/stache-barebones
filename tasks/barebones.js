@@ -1,20 +1,26 @@
-"use strict";
 module.exports = function (grunt) {
+    "use strict";
+
+    var defaults,
+        jit,
+        localConfig,
+        merge,
+        stacheConfig;
 
     /**
      * Merges two objects into one.
      * https://github.com/yeikos/js.merge
      */
-    var merge = require('merge');
+    merge = require('merge');
 
     /**
      * JIT (Just In Time) plugin loader for Grunt.
      * https://github.com/shootaroo/jit-grunt
      */
-    var jit = require('jit-grunt');
+    jit = require('jit-grunt');
 
     // Plugin defaults.
-    var defaults = {
+    defaults = {
         stache: {
             dir: 'node_modules/stache-barebones/',
             config: {},
@@ -22,7 +28,7 @@ module.exports = function (grunt) {
         },
         clean: {
             build: {
-                src: ['build/']
+                src: ['dist/']
             }
         },
         assemble: {
@@ -36,8 +42,8 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'content/pages/',
-                        dest: 'build/',
+                        cwd: 'src/pages/',
+                        dest: 'dist/',
                         src: [
                             '**/*.md',
                             '**/*.hbs',
@@ -55,9 +61,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'content/styles/',
+                        cwd: 'src/styles/',
                         src: ['*.scss'],
-                        dest: 'build/assets/styles/',
+                        dest: 'dist/assets/styles/',
                         ext: '.css'
                     }
                 ]
@@ -68,7 +74,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 4000,
                     livereload: 4100,
-                    base: 'build'
+                    base: 'dist'
                 }
             }
         },
@@ -81,7 +87,7 @@ module.exports = function (grunt) {
                     '<%= stache.dir %>src/**/*.*',
                 ],
                 tasks: [
-                    'assemble'
+                    'newer:assemble'
                 ]
             }
         }
@@ -91,8 +97,8 @@ module.exports = function (grunt) {
      * Retrieve and compile the appropriate YAML files and load it into
      * the plugin defaults.
      */
-    var stacheConfig = grunt.file.readYAML(defaults.stache.dir + defaults.stache.configFile);
-    var localConfig = grunt.file.readYAML(defaults.stache.configFile);
+    stacheConfig = grunt.file.readYAML(defaults.stache.dir + defaults.stache.configFile);
+    localConfig = grunt.file.readYAML(defaults.stache.configFile);
     defaults.stache.config = merge(stacheConfig, localConfig);
     grunt.config.merge(defaults);
 
@@ -103,9 +109,9 @@ module.exports = function (grunt) {
 
     // Grunt tasks.
     grunt.registerTask('serve', [
-        'clean',
-        'assemble',
-        'sass',
+        //'clean',
+        'newer:assemble',
+        'newer:sass',
         'connect',
         'watch'
     ]);
